@@ -32,6 +32,14 @@ public class Menu implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Authority> authoritys = new HashSet<>();
 
+    @ManyToOne
+    private Menu parent;
+
+    @OneToMany(mappedBy = "parent")
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    private Set<Menu> childrens = new HashSet<>();
+
     public Long getId() {
         return id;
     }
@@ -54,6 +62,22 @@ public class Menu implements Serializable {
 
     public void setAuthoritys(Set<Authority> authoritys) {
         this.authoritys = authoritys;
+    }
+
+    public Menu getParent() {
+        return parent;
+    }
+
+    public void setParent(Menu menu) {
+        this.parent = menu;
+    }
+
+    public Set<Menu> getChildrens() {
+        return childrens;
+    }
+
+    public void setChildrens(Set<Menu> menus) {
+        this.childrens = menus;
     }
 
     @Override

@@ -6,6 +6,18 @@
             "relationshipType": "many-to-many",
             "ownerSide": false,
             "otherEntityRelationshipName": "menu"
+        },
+        {
+            "relationshipName": "parent",
+            "otherEntityName": "menu",
+            "relationshipType": "many-to-one",
+            "otherEntityField": "id"
+        },
+        {
+            "relationshipName": "children",
+            "otherEntityName": "menu",
+            "relationshipType": "one-to-many",
+            "otherEntityRelationshipName": "children"
         }
     ],
     "fields": [

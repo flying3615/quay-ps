@@ -9,6 +9,7 @@
                 "main": "Entities",
                 "driver": "Driver",
                 "car": "Car",
+                "menu": "Menu",
                 "jhipster-needle-menu-add-entry": "JHipster will add additional entities here (do not translate!)"
             },
             "account": {

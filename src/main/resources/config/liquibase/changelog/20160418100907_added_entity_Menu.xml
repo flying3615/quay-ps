@@ -25,9 +25,15 @@
                 <constraints nullable="true" />
             </column>
 
+            <column name="parent_id" type="bigint"/>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
 
+        <addForeignKeyConstraint baseColumnNames="parent_id"
+                                 baseTableName="menu"
+                                 constraintName="fk_menu_parent_id"
+                                 referencedColumnNames="id"
+                                 referencedTableName="menu"/>
 
         <createTable tableName="auth_menu">
             <column name="menu_id" type="bigint">
