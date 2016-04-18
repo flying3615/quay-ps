@@ -1,0 +1,22 @@
+{
+    "relationships": [
+        {
+            "relationshipName": "authority",
+            "otherEntityName": "authority",
+            "relationshipType": "many-to-many",
+            "ownerSide": false,
+            "otherEntityRelationshipName": "menu"
+        }
+    ],
+    "fields": [
+        {
+            "fieldName": "name",
+            "fieldType": "String"
+        }
+    ],
+    "changelogDate": "20160418100907",
+    "dto": "no",
+    "service": "no",
+    "entityTableName": "menu",
+    "pagination": "no"
+}

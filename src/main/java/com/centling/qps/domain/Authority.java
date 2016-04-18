@@ -1,14 +1,15 @@
 package com.centling.qps.domain;
 
+import com.fasterxml.jackson.annotation.JsonIgnore;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
-import javax.persistence.Entity;
-import javax.persistence.Id;
-import javax.persistence.Table;
-import javax.persistence.Column;
+
+import javax.persistence.*;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Size;
 import java.io.Serializable;
+import java.util.HashSet;
+import java.util.Set;
 
 /**
  * An authority (a security role) used by Spring Security.
@@ -32,6 +33,23 @@ public class Authority implements Serializable {
 
     public void setName(String name) {
         this.name = name;
+    }
+
+
+    @ManyToMany
+    @JsonIgnore
+    @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
+    @JoinTable(name = "auth_menu",
+        joinColumns = @JoinColumn(name="auth_name", referencedColumnName="name"),
+        inverseJoinColumns = @JoinColumn(name="menus_id", referencedColumnName="ID"))
+    private Set<Menu> menus = new HashSet<>();
+
+    public Set<Menu> getMenus() {
+        return menus;
+    }
+
+    public void setMenus(Set<Menu> menus) {
+        this.menus = menus;
     }
 
     @Override
