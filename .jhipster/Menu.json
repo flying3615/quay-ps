@@ -24,6 +24,10 @@
         {
             "fieldName": "name",
             "fieldType": "String"
+        },
+        {
+            "fieldName": "url",
+            "fieldType": "String"
         }
     ],
     "changelogDate": "20160418100907",

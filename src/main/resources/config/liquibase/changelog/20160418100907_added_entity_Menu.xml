@@ -18,14 +18,24 @@
     -->
     <changeSet id="20160418100907" author="jhipster">
         <createTable tableName="menu">
-            <column name="id" type="bigint" autoIncrement="${autoIncrement}">
+            <column name="id" type="varchar(255)">
                 <constraints primaryKey="true" nullable="false"/>
             </column>
             <column name="name" type="varchar(255)">
-                <constraints nullable="true" />
+                <constraints nullable="true"/>
             </column>
 
-            <column name="parent_id" type="bigint"/>
+            <column name="url" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
+
+            <column name="order_no" type="bigint">
+                <constraints nullable="false"/>
+            </column>
+
+            <column name="parent_id" type="varchar(255)">
+                <constraints nullable="true"/>
+            </column>
             <!-- jhipster-needle-liquibase-add-column - Jhipster will add columns here, do not remove-->
         </createTable>
 
@@ -35,8 +45,13 @@
                                  referencedColumnNames="id"
                                  referencedTableName="menu"/>
 
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/menus.csv"
+                  separator=";"
+                  tableName="menu"/>
+
         <createTable tableName="auth_menu">
-            <column name="menu_id" type="bigint">
+            <column name="menu_id" type="varchar(255)">
                 <constraints nullable="false"/>
             </column>
             <column name="auth_name" type="varchar(255)">

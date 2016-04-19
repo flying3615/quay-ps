@@ -43,6 +43,8 @@ public class MenuResourceIntTest {
 
     private static final String DEFAULT_NAME = "AAAAA";
     private static final String UPDATED_NAME = "BBBBB";
+    private static final String DEFAULT_URL = "AAAAA";
+    private static final String UPDATED_URL = "BBBBB";
 
     @Inject
     private MenuRepository menuRepository;
@@ -71,6 +73,7 @@ public class MenuResourceIntTest {
     public void initTest() {
         menu = new Menu();
         menu.setName(DEFAULT_NAME);
+        menu.setUrl(DEFAULT_URL);
     }
 
     @Test
@@ -90,6 +93,7 @@ public class MenuResourceIntTest {
         assertThat(menus).hasSize(databaseSizeBeforeCreate + 1);
         Menu testMenu = menus.get(menus.size() - 1);
         assertThat(testMenu.getName()).isEqualTo(DEFAULT_NAME);
+        assertThat(testMenu.getUrl()).isEqualTo(DEFAULT_URL);
     }
 
     @Test
@@ -103,7 +107,8 @@ public class MenuResourceIntTest {
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
                 .andExpect(jsonPath("$.[*].id").value(hasItem(menu.getId().intValue())))
-                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())));
+                .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
+                .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())));
     }
 
     @Test
@@ -117,7 +122,8 @@ public class MenuResourceIntTest {
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
             .andExpect(jsonPath("$.id").value(menu.getId().intValue()))
-            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()));
+            .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
+            .andExpect(jsonPath("$.url").value(DEFAULT_URL.toString()));
     }
 
     @Test
@@ -139,6 +145,7 @@ public class MenuResourceIntTest {
         Menu updatedMenu = new Menu();
         updatedMenu.setId(menu.getId());
         updatedMenu.setName(UPDATED_NAME);
+        updatedMenu.setUrl(UPDATED_URL);
 
         restMenuMockMvc.perform(put("/api/menus")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -150,6 +157,7 @@ public class MenuResourceIntTest {
         assertThat(menus).hasSize(databaseSizeBeforeUpdate);
         Menu testMenu = menus.get(menus.size() - 1);
         assertThat(testMenu.getName()).isEqualTo(UPDATED_NAME);
+        assertThat(testMenu.getUrl()).isEqualTo(UPDATED_URL);
     }
 
     @Test
