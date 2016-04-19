@@ -106,7 +106,7 @@ public class MenuResourceIntTest {
         restMenuMockMvc.perform(get("/api/menus?sort=id,desc"))
                 .andExpect(status().isOk())
                 .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-                .andExpect(jsonPath("$.[*].id").value(hasItem(menu.getId().intValue())))
+                .andExpect(jsonPath("$.[*].id").value(hasItem(menu.getId())))
                 .andExpect(jsonPath("$.[*].name").value(hasItem(DEFAULT_NAME.toString())))
                 .andExpect(jsonPath("$.[*].url").value(hasItem(DEFAULT_URL.toString())));
     }
@@ -121,7 +121,7 @@ public class MenuResourceIntTest {
         restMenuMockMvc.perform(get("/api/menus/{id}", menu.getId()))
             .andExpect(status().isOk())
             .andExpect(content().contentType(MediaType.APPLICATION_JSON))
-            .andExpect(jsonPath("$.id").value(menu.getId().intValue()))
+            .andExpect(jsonPath("$.id").value(menu.getId()))
             .andExpect(jsonPath("$.name").value(DEFAULT_NAME.toString()))
             .andExpect(jsonPath("$.url").value(DEFAULT_URL.toString()));
     }

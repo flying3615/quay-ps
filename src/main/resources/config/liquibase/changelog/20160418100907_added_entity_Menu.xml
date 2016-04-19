@@ -73,5 +73,11 @@
                                  referencedColumnNames="name"
                                  referencedTableName="jhi_authority"/>
 
+        <loadData encoding="UTF-8"
+                  file="config/liquibase/auth_menu.csv"
+                  separator=","
+                  tableName="auth_menu">
+        </loadData>
+
     </changeSet>
 </databaseChangeLog>

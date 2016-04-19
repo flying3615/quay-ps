@@ -1,3 +1,6 @@
-name
-ROLE_ADMIN
-ROLE_USER
+name;role_name
+ROLE_USER;平台操作员
+ROLE_ADMIN;超级管理员
+ROLE_GOODSPROXY;货代员
+ROLE_SHIPCOMPANY;船公司
+ROLE_FINANCE;财务人员
