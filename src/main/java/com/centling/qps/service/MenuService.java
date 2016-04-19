@@ -4,15 +4,12 @@ import com.centling.qps.domain.Authority;
 import com.centling.qps.domain.Menu;
 import com.centling.qps.repository.AuthorityRepository;
 import com.centling.qps.repository.MenuRepository;
-import com.centling.qps.repository.UserRepository;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.util.Optional;
-import java.util.stream.Collectors;
 
 /**
  * Created by centling on 2016/4/19.
@@ -58,8 +55,6 @@ public class MenuService {
             Menu parent = menuRepository.findOne(menu.getParent().getId());
             //is the last child, remove its parent as well
             //if there is no child else has the same parent id, then remove its parent
-
-            log.debug("authority.getMenus() = {}",authority.getMenus());
             authority.getMenus().stream()
                 .filter(menu_org_child->menu_org_child.isChild())
                     .filter(menu_org->menu_org.getParent().getId()==menu.getParent().getId())
@@ -72,7 +67,6 @@ public class MenuService {
         }
         authorityRepository.save(authority);
         return authority;
-
 
     }
 
