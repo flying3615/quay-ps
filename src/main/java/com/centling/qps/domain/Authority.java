@@ -54,7 +54,7 @@ public class Authority implements Serializable {
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     @JoinTable(name = "auth_menu",
         joinColumns = @JoinColumn(name="auth_name", referencedColumnName="name"),
-        inverseJoinColumns = @JoinColumn(name="menus_id", referencedColumnName="ID"))
+        inverseJoinColumns = @JoinColumn(name="menu_id", referencedColumnName="ID"))
     private Set<Menu> menus = new HashSet<>();
 
     public Set<Menu> getMenus() {

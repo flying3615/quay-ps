@@ -9,6 +9,6 @@ import java.util.List;
 /**
  * Spring Data JPA repository for the Menu entity.
  */
-public interface MenuRepository extends JpaRepository<Menu,Long> {
+public interface MenuRepository extends JpaRepository<Menu,String> {
 
 }

@@ -26,10 +26,10 @@ import java.util.Optional;
 public class MenuResource {
 
     private final Logger log = LoggerFactory.getLogger(MenuResource.class);
-        
+
     @Inject
     private MenuRepository menuRepository;
-    
+
     /**
      * POST  /menus : Create a new menu.
      *
@@ -101,7 +101,7 @@ public class MenuResource {
         method = RequestMethod.GET,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Menu> getMenu(@PathVariable Long id) {
+    public ResponseEntity<Menu> getMenu(@PathVariable String id) {
         log.debug("REST request to get Menu : {}", id);
         Menu menu = menuRepository.findOne(id);
         return Optional.ofNullable(menu)
@@ -121,7 +121,7 @@ public class MenuResource {
         method = RequestMethod.DELETE,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> deleteMenu(@PathVariable Long id) {
+    public ResponseEntity<Void> deleteMenu(@PathVariable String id) {
         log.debug("REST request to delete Menu : {}", id);
         menuRepository.delete(id);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("menu", id.toString())).build();

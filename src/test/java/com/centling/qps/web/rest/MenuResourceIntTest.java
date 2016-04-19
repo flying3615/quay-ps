@@ -45,6 +45,8 @@ public class MenuResourceIntTest {
     private static final String UPDATED_NAME = "BBBBB";
     private static final String DEFAULT_URL = "AAAAA";
     private static final String UPDATED_URL = "BBBBB";
+    private static final Long DEFAULT_ORDER_NO = 100L;
+    private static final Long UPDATED_ORDER_NO = 200L;
 
     @Inject
     private MenuRepository menuRepository;
@@ -74,6 +76,7 @@ public class MenuResourceIntTest {
         menu = new Menu();
         menu.setName(DEFAULT_NAME);
         menu.setUrl(DEFAULT_URL);
+        menu.setOrder_no(DEFAULT_ORDER_NO);
     }
 
     @Test
@@ -130,7 +133,7 @@ public class MenuResourceIntTest {
     @Transactional
     public void getNonExistingMenu() throws Exception {
         // Get the menu
-        restMenuMockMvc.perform(get("/api/menus/{id}", Long.MAX_VALUE))
+        restMenuMockMvc.perform(get("/api/menus/{id}", "DEFAULT_ID"))
                 .andExpect(status().isNotFound());
     }
 
@@ -146,6 +149,7 @@ public class MenuResourceIntTest {
         updatedMenu.setId(menu.getId());
         updatedMenu.setName(UPDATED_NAME);
         updatedMenu.setUrl(UPDATED_URL);
+        updatedMenu.setOrder_no(UPDATED_ORDER_NO);
 
         restMenuMockMvc.perform(put("/api/menus")
                 .contentType(TestUtil.APPLICATION_JSON_UTF8)
@@ -158,6 +162,7 @@ public class MenuResourceIntTest {
         Menu testMenu = menus.get(menus.size() - 1);
         assertThat(testMenu.getName()).isEqualTo(UPDATED_NAME);
         assertThat(testMenu.getUrl()).isEqualTo(UPDATED_URL);
+        assertThat(testMenu.getOrder_no()).isEqualTo(UPDATED_ORDER_NO);
     }
 
     @Test

@@ -1,8 +1,3 @@
-DROP TABLE auth_menu IF EXISTS;
--- DROP TABLE jhi_persistent_audit_evt_data;
--- DROP TABLE jhi_user_authority;
---
--- DROP TABLE jhi_persistent_audit_event;
--- DROP TABLE jhi_authority;
--- DROP TABLE jhi_user;
--- DROP TABLE menu;
+DROP TABLE IF EXISTS auth_menu,jhi_persistent_audit_evt_data,jhi_user_authority;
+DROP TABLE IF EXISTS jhi_persistent_audit_event,jhi_authority,jhi_user,menu;
+
