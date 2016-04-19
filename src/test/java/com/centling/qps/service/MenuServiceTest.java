@@ -16,6 +16,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 
+import java.util.List;
 import java.util.Set;
 
 import static org.assertj.core.api.Assertions.assertThat;
@@ -89,6 +90,10 @@ public class MenuServiceTest {
         parent_menu.getChildrens().add(child_menu2);
         parent_menu.getChildrens().add(child_menu3);
 
+        child_menu1.setParent(parent_menu);
+        child_menu2.setParent(parent_menu);
+        child_menu3.setParent(parent_menu);
+
         menuRepository.save(child_menu1);
         menuRepository.save(child_menu2);
         menuRepository.save(child_menu3);
@@ -116,18 +121,63 @@ public class MenuServiceTest {
         assertThat(hasMenus.contains(child2)).isTrue();
         assertThat(hasMenus.contains(child3)).isTrue();
 
-
     }
 
     @Test
     public void assertParentMenusAddToRole() {
-        Set<Menu> hasMenus =  authorityRepository.findOne("ROLE_ADMIN").getMenus();
+        Set<Menu> hasNonMenus =  authorityRepository.findOne("ROLE_ADMIN").getMenus();
 
-        Menu child1 =  menuRepository.findByName(DEFAULT_NAME1).get();
+        assertThat(hasNonMenus.contains(child_menu1)).isFalse();
+        assertThat(hasNonMenus.contains(child_menu2)).isFalse();
+        assertThat(hasNonMenus.contains(child_menu3)).isFalse();
 
-        assertThat(hasMenus.contains(child1)).isFalse();
-        assertThat(hasMenus.contains(child_menu1)).isFalse();
+        Menu parent =  menuRepository.findByName(DEFAULT_NAME_PARENT).get();
 
+        menuService.addMenuToRole("ROLE_ADMIN",parent.getId());
+
+        Set<Menu> hasSomeMenus =  authorityRepository.findOne("ROLE_ADMIN").getMenus();
+        assertThat(hasSomeMenus.contains(child_menu1)).isTrue();
+        assertThat(hasSomeMenus.contains(child_menu2)).isTrue();
+        assertThat(hasSomeMenus.contains(child_menu3)).isTrue();
+
+    }
+
+    @Test
+    public void assertRemoveLastChildMenuFromRole() {
+        Menu parent =  menuRepository.findByName(DEFAULT_NAME_PARENT).get();
+        menuService.addMenuToRole("ROLE_ADMIN",parent.getId());
+        Set<Menu> hasSomeMenus =  authorityRepository.findOne("ROLE_ADMIN").getMenus();
+        assertThat(hasSomeMenus.contains(child_menu1)).isTrue();
+        assertThat(hasSomeMenus.contains(child_menu2)).isTrue();
+        assertThat(hasSomeMenus.contains(child_menu3)).isTrue();
+
+        assertThat(hasSomeMenus.contains(parent)).isTrue();
+        //delete children one by one
+        menuService.deleteMenuFromRole("ROLE_ADMIN",child_menu1.getId());
+        menuService.deleteMenuFromRole("ROLE_ADMIN",child_menu2.getId());
+        menuService.deleteMenuFromRole("ROLE_ADMIN",child_menu3.getId());
+        Set<Menu> hasNonMenus =  authorityRepository.findOne("ROLE_ADMIN").getMenus();
+        assertThat(hasNonMenus.contains(parent)).isFalse();
+    }
+
+    @Test
+    public void assertRemoveParentMenuFromRole() {
+        Menu parent =  menuRepository.findByName(DEFAULT_NAME_PARENT).get();
+        menuService.addMenuToRole("ROLE_ADMIN",parent.getId());
+        Set<Menu> hasSomeMenus =  authorityRepository.findOne("ROLE_ADMIN").getMenus();
+        assertThat(hasSomeMenus.contains(child_menu1)).isTrue();
+        assertThat(hasSomeMenus.contains(child_menu2)).isTrue();
+        assertThat(hasSomeMenus.contains(child_menu3)).isTrue();
+
+        assertThat(hasSomeMenus.contains(parent)).isTrue();
+
+        menuService.deleteMenuFromRole("ROLE_ADMIN",parent.getId());
+        Set<Menu> hasNonMenus =  authorityRepository.findOne("ROLE_ADMIN").getMenus();
+        //delete parent directly
+        assertThat(hasNonMenus.contains(parent)).isFalse();
+        assertThat(hasNonMenus.contains(child_menu1)).isFalse();
+        assertThat(hasNonMenus.contains(child_menu2)).isFalse();
+        assertThat(hasNonMenus.contains(child_menu3)).isFalse();
     }
 
 

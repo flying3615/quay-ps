@@ -10,6 +10,7 @@ import javax.validation.constraints.Size;
 import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.stream.Collectors;
 
 /**
  * An authority (a security role) used by Spring Security.
@@ -92,6 +93,8 @@ public class Authority implements Serializable {
     public String toString() {
         return "Authority{" +
             "name='" + name + '\'' +
-            "}";
+            ", role_name='" + role_name + '\'' +
+            ", menus=" + menus.stream().map(menu->menu.getName()).collect(Collectors.toList()) +
+            '}';
     }
 }

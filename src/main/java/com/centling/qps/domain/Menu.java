@@ -10,6 +10,8 @@ import java.io.Serializable;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.Objects;
+import java.util.stream.Collector;
+import java.util.stream.Collectors;
 
 /**
  * A Menu.
@@ -103,6 +105,10 @@ public class Menu implements Serializable {
         this.childrens = menus;
     }
 
+    public boolean isChild(){
+        return parent!=null;
+    }
+
     @Override
     public boolean equals(Object o) {
         if (this == o) {
@@ -126,9 +132,13 @@ public class Menu implements Serializable {
     @Override
     public String toString() {
         return "Menu{" +
-            "id=" + id +
-            ", name='" + name + "'" +
-            ", url='" + url + "'" +
+            "id='" + id + '\'' +
+            ", name='" + name + '\'' +
+            ", url='" + url + '\'' +
+            ", order_no=" + order_no +
+            ", authoritys=" + authoritys +
+            ", parent=" + parent +
+            ", childrens=" + childrens.stream().map(child->child.getName()).collect(Collectors.toList()) +
             '}';
     }
 }
