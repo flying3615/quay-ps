@@ -40,9 +40,8 @@ public class MenuService {
             authority.getMenus().add(menu.getParent());
         }else {
             //is parent, need to find and add its all children
-            menuRepository.findByParentId(menuId).stream().forEach(child->{
-                    authority.getMenus().add(child);
-                });
+            menuRepository.findByParentId(menuId).stream().
+                forEach(child-> authority.getMenus().add(child));
         }
         authorityRepository.save(authority);
         return authority;

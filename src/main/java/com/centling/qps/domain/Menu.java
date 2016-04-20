@@ -1,6 +1,7 @@
 package com.centling.qps.domain;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
+import com.fasterxml.jackson.databind.ext.OptionalHandlerFactory;
 import org.hibernate.annotations.Cache;
 import org.hibernate.annotations.CacheConcurrencyStrategy;
 import org.hibernate.annotations.GenericGenerator;
@@ -8,6 +9,7 @@ import org.hibernate.annotations.GenericGenerator;
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashSet;
+import java.util.Optional;
 import java.util.Set;
 import java.util.Objects;
 import java.util.stream.Collector;
@@ -136,6 +138,7 @@ public class Menu implements Serializable, Comparable<Menu>{
             ", name='" + name + '\'' +
             ", url='" + url + '\'' +
             ", order_no=" + order_no +
+            ", parent=" + Optional.ofNullable(parent).map(parent-> parent.getName()).orElse(" ") +
             '}';
     }
 

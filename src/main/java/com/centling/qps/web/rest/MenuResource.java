@@ -1,5 +1,6 @@
 package com.centling.qps.web.rest;
 
+import com.centling.qps.service.MenuService;
 import com.codahale.metrics.annotation.Timed;
 import com.centling.qps.domain.Menu;
 import com.centling.qps.repository.MenuRepository;
@@ -17,6 +18,7 @@ import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.List;
 import java.util.Optional;
+import java.util.TreeSet;
 
 /**
  * REST controller for managing Menu.
@@ -29,6 +31,9 @@ public class MenuResource {
 
     @Inject
     private MenuRepository menuRepository;
+
+    @Inject
+    private MenuService menuService;
 
     /**
      * POST  /menus : Create a new menu.
@@ -75,6 +80,47 @@ public class MenuResource {
             .headers(HeaderUtil.createEntityUpdateAlert("menu", menu.getId().toString()))
             .body(result);
     }
+
+    /**
+     * GET  /menusByRole : Get menus from specific Roles.
+     *
+     * @param roles the login roles
+     * @return the ResponseEntity with status 200 (OK) and with body the updated menu,
+     * or with status 400 (Bad Request) if the menu is not valid,
+     * or with status 500 (Internal Server Error) if the menu couldnt be updated
+     * @throws URISyntaxException if the Location URI syntax is incorrect
+     */
+    @RequestMapping(value = "/menusByRole",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public TreeSet<Menu> getMenusByRoles(@RequestBody List<String> roles) throws URISyntaxException {
+        log.debug("REST request to get Menus by roles : {}", roles);
+        TreeSet<Menu> result = menuService.getMenusByRoleList(roles);
+        return result;
+    }
+
+    @RequestMapping(value = "/addMenuToRole/{role_name}/{menuId}",
+        method = RequestMethod.PUT,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Void> addMenuToRole(@PathVariable String role_name,@PathVariable String menuId) throws URISyntaxException {
+        log.debug("REST request to add Menus to role : {} to {}", menuId,role_name);
+        menuService.addMenuToRole(role_name,menuId);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("menu", menuId.toString())).build();
+    }
+
+
+    @RequestMapping(value = "/delMenuToRole/{role_name}/{menuId}",
+        method = RequestMethod.PUT,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<Void> deleteMenuFromRole(@PathVariable String role_name,@PathVariable String menuId) throws URISyntaxException {
+        log.debug("REST request to add Menus to role : {} to {}", menuId,role_name);
+        menuService.deleteMenuFromRole(role_name,menuId);
+        return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("menu", menuId.toString())).build();
+    }
+
 
     /**
      * GET  /menus : get all the menus.

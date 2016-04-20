@@ -196,6 +196,7 @@ public class MenuServiceTest {
         menuService.addMenuToRole("ROLE_FINANCE",menu3.getId());
         TreeSet<Menu> hasSomeMenusInOrder =  menuService.getMenusByRoleList(roles);
         //assert the first & the last
+        System.out.println(hasSomeMenusInOrder);
         assertThat(hasSomeMenusInOrder.first()).isEqualTo(parent_menu);
         assertThat(hasSomeMenusInOrder.last()).isEqualTo(menu1);
 
