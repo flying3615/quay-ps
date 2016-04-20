@@ -16,6 +16,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.TreeSet;
@@ -81,17 +82,9 @@ public class MenuResource {
             .body(result);
     }
 
-    /**
-     * GET  /menusByRole : Get menus from specific Roles.
-     *
-     * @param roles the login roles
-     * @return the ResponseEntity with status 200 (OK) and with body the updated menu,
-     * or with status 400 (Bad Request) if the menu is not valid,
-     * or with status 500 (Internal Server Error) if the menu couldnt be updated
-     * @throws URISyntaxException if the Location URI syntax is incorrect
-     */
+
     @RequestMapping(value = "/menusByRole",
-        method = RequestMethod.GET,
+        method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public TreeSet<Menu> getMenusByRoles(@RequestBody List<String> roles) throws URISyntaxException {

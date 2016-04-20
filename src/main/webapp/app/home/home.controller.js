@@ -5,9 +5,9 @@
         .module('quayPsApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope', 'Principal', 'LoginService','Menu'];
+    HomeController.$inject = ['$scope','$log', 'Principal', 'LoginService','Menu'];
 
-    function HomeController ($scope, Principal, LoginService,Menu) {
+    function HomeController ($scope,$log, Principal, LoginService,Menu) {
         var vm = this;
 
         vm.account = null;
@@ -26,7 +26,10 @@
                 vm.isAuthenticated = Principal.isAuthenticated;
                 return account;
             }).then(function(account){
-                vm.menus = Menu.getMenusByRoles(account.authorities)
+                Menu.getMenusByRoles(account.authorities).then(function(menus){
+                    $log.debug(menus);
+                    vm.menus = menus.data;
+                })
             });
         }
     }
