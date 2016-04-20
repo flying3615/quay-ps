@@ -29,7 +29,7 @@
                 <constraints nullable="true"/>
             </column>
 
-            <column name="order_no" type="bigint">
+            <column name="order_no" type="integer">
                 <constraints nullable="false"/>
             </column>
 

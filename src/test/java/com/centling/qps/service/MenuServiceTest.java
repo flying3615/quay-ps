@@ -16,8 +16,10 @@ import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
 
+import java.util.ArrayList;
 import java.util.List;
 import java.util.Set;
+import java.util.TreeSet;
 
 import static org.assertj.core.api.Assertions.assertThat;
 
@@ -57,10 +59,10 @@ public class MenuServiceTest {
     private static final String DEFAULT_URL3 = "url3";
     private static final String DEFAULT_URL_PARENT = "parent_url";
 
-    private static final Long DEFAULT_ORDER1 = 1L;
-    private static final Long DEFAULT_ORDER2 = 2L;
-    private static final Long DEFAULT_ORDER3 = 3L;
-    private static final Long DEFAULT_ORDER_PARENT = 4L;
+    private static final Integer DEFAULT_ORDER1 = 4;
+    private static final Integer DEFAULT_ORDER2 = 3;
+    private static final Integer DEFAULT_ORDER3 = 2;
+    private static final Integer DEFAULT_ORDER_PARENT = 1;
 
 
     @Before
@@ -179,6 +181,26 @@ public class MenuServiceTest {
         assertThat(hasNonMenus.contains(child_menu2)).isFalse();
         assertThat(hasNonMenus.contains(child_menu3)).isFalse();
     }
+
+
+    @Test
+    public void assertGetMenusByRoleListAndInOrder(){
+        List<String> roles = new ArrayList<>();
+        roles.add("ROLE_FINANCE");
+        roles.add("ROLE_GOODSPROXY");
+        Menu menu1 =  menuRepository.findByName(DEFAULT_NAME1).get();
+        Menu menu2 =  menuRepository.findByName(DEFAULT_NAME2).get();
+        Menu menu3 =  menuRepository.findByName(DEFAULT_NAME3).get();
+        menuService.addMenuToRole("ROLE_FINANCE",menu1.getId());
+        menuService.addMenuToRole("ROLE_GOODSPROXY",menu2.getId());
+        menuService.addMenuToRole("ROLE_FINANCE",menu3.getId());
+        TreeSet<Menu> hasSomeMenusInOrder =  menuService.getMenusByRoleList(roles);
+        //assert the first & the last
+        assertThat(hasSomeMenusInOrder.first()).isEqualTo(parent_menu);
+        assertThat(hasSomeMenusInOrder.last()).isEqualTo(menu1);
+
+    }
+
 
 
 }

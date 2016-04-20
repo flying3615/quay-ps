@@ -19,7 +19,7 @@ import java.util.stream.Collectors;
 @Entity
 @Table(name = "menu")
 @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
-public class Menu implements Serializable {
+public class Menu implements Serializable, Comparable<Menu>{
 
     private static final long serialVersionUID = 1L;
 
@@ -33,16 +33,16 @@ public class Menu implements Serializable {
     @Column(name = "url")
     private String url;
 
-    public Long getOrder_no() {
+    public Integer getOrder_no() {
         return order_no;
     }
 
-    public void setOrder_no(Long order_no) {
+    public void setOrder_no(Integer order_no) {
         this.order_no = order_no;
     }
 
     @Column(name = "order_no")
-    private Long order_no;
+    private Integer order_no;
 
     @ManyToMany(mappedBy = "menus")
     @JsonIgnore
@@ -136,9 +136,11 @@ public class Menu implements Serializable {
             ", name='" + name + '\'' +
             ", url='" + url + '\'' +
             ", order_no=" + order_no +
-            ", authoritys=" + authoritys +
-            ", parent=" + parent +
-            ", childrens=" + childrens.stream().map(child->child.getName()).collect(Collectors.toList()) +
             '}';
+    }
+
+    @Override
+    public int compareTo(Menu o) {
+        return this.order_no-o.order_no;
     }
 }

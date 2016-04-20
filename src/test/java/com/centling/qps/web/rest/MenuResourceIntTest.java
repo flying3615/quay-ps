@@ -45,8 +45,8 @@ public class MenuResourceIntTest {
     private static final String UPDATED_NAME = "BBBBB";
     private static final String DEFAULT_URL = "AAAAA";
     private static final String UPDATED_URL = "BBBBB";
-    private static final Long DEFAULT_ORDER_NO = 100L;
-    private static final Long UPDATED_ORDER_NO = 200L;
+    private static final Integer DEFAULT_ORDER_NO = 100;
+    private static final Integer UPDATED_ORDER_NO = 200;
 
     @Inject
     private MenuRepository menuRepository;

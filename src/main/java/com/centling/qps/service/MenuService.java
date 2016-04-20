@@ -10,6 +10,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
+import java.util.List;
+import java.util.Set;
+import java.util.TreeSet;
 
 /**
  * Created by centling on 2016/4/19.
@@ -70,5 +73,12 @@ public class MenuService {
 
     }
 
+    public TreeSet<Menu> getMenusByRoleList(List<String> role_names){
+        Set<Menu> menusInOrder = role_names.stream()
+            .map(role_name->{Authority authority = authorityRepository.findOne(role_name);return authority.getMenus();})
+            .reduce(new TreeSet<>(),(all,items)->{all.addAll(items);return all;});
+
+        return new TreeSet<>(menusInOrder);
+    }
 
 }
