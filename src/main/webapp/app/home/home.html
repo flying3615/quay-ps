@@ -39,3 +39,15 @@
         </div>
     </div>
 </div>
+
+<ui-layout options="{ flow: 'row', dividerSize: '0' }">
+    <!--<div ui-layout-container size="11%" class="def-bottom-border"><div ng-include="'app/mainApp/view/header.html'" ng-controller="headerController" ></div></div>-->
+    <div ui-layout-container size="11%" class="def-bottom-border"><div ng-include="'app/layouts/navbar/navbar.html'" ></div></div>
+    <div ui-layout-container size="84%">
+        <ui-layout options="{ flow: 'column', dividerSize: '0' }">
+            <div ui-layout-container size="{{leftSize}}" class="def-right-border"><div ng-include="'app/layouts/menu/menu.html'" ng-controller="menuController"></div></div>
+            <div ui-layout-container size="{{rightSize}}"><div ui-view  class="def-noscroll-container def-height-100per"></div></div>
+        </ui-layout>
+    </div>
+    <!--<div ui-layout-container size="5%" class="def-top-border"><div ng-include="'app/mainApp/view/footer.html'" ng-controller="footerController"></div></div>-->
+</ui-layout>
