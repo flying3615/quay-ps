@@ -32,8 +32,6 @@
                 url: "api/menusByRole",
                 data: JSON.stringify(roles)
             });
-            //return $http.post('api/menusByRole',{header:'Content-type: application/json',data:JSON.stringify(roles)})
-            //return $http.get('api/menus',{header:'Content-type: application/json',data:roles})
         }
 
         return service;

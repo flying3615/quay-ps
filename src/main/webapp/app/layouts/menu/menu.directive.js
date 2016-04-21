@@ -1,4 +1,4 @@
-angular.module('mainApp').
+angular.module('quayPsApp').
     directive('defMenu', function() {
         return {
             restrict:'A',
