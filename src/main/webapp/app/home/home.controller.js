@@ -24,12 +24,6 @@
             Principal.identity().then(function(account) {
                 vm.account = account;
                 vm.isAuthenticated = Principal.isAuthenticated;
-                return account;
-            }).then(function(account){
-                Menu.getMenusByRoles(account.authorities).then(function(menus){
-                    $log.debug(menus);
-                    vm.menus = menus.data;
-                })
             });
         }
     }
