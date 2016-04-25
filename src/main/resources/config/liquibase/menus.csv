@@ -1,7 +1,7 @@
 ﻿id;name;url;order_no;parent_id
 297e16af53eabe000153eabeecb50014;系统管理;app.index;100;NULL
-297e16af53eabe000153eabeecb60015;角色分配;app.sys.roleAssign;102;297e16af53eabe000153eabeecb50014
-297e16af53eabe000153eabeecb60016;菜单分配;app.sys.editMenu;101;297e16af53eabe000153eabeecb50014
+297e16af53eabe000153eabeecb60015;角色分配;roleAssign;102;297e16af53eabe000153eabeecb50014
+297e16af53eabe000153eabeecb60016;菜单分配;editMenu;101;297e16af53eabe000153eabeecb50014
 297e16af53eabe000153eabeecbb0017;业务查询;app.index.indexChoose;200;NULL
 297e16af53eabe000153eabeecbb0018;历史账单查询;app.index.indexChoose;202;297e16af53eabe000153eabeecbb0017
 297e16af53eabe000153eabeecbb0019;货物信息查询;app.index.indexChoose;201;297e16af53eabe000153eabeecbb0017

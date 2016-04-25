@@ -2,7 +2,6 @@
     <div class="navbar-default sidebar" role="navigation">
         <div class="sidebar-nav navbar-collapse">
             <ul class="nav" id="side-menu">
-                {{message}}
                 <li ng-repeat="item in menuList|orderBy: 'orderNo' : false" ng-class={"active":item.unfold}>
                     <a ng-click="itemClicked(item)"><i class="glyphicon glyphicon-tree-deciduous" ng-class={"def-color-red":item.unfold}></i>&nbsp;&nbsp;{{item.name}}</a>
                     <ul ng-if="item.child.length > 0" class="nav-second-level collapse" ng-class="{'nav':true, 'in':item.unfold, 'nav-second-level':true, 'collapse':true}">
