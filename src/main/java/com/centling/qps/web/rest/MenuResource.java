@@ -94,9 +94,9 @@ public class MenuResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> addMenuToRole(@PathVariable String role_name,@PathVariable String menuId) throws URISyntaxException {
-        log.debug("REST request to add Menus to role : {} to {}", menuId,role_name);
-        menuService.addMenuToRole(role_name,menuId);
+    public ResponseEntity<Void> addMenuToRole(@PathVariable String role_name, @PathVariable String menuId) throws URISyntaxException {
+        log.debug("REST request to add Menus to role : {} to {}", menuId, role_name);
+        menuService.addMenuToRole(role_name, menuId);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("menu", menuId.toString())).build();
     }
 
@@ -105,9 +105,9 @@ public class MenuResource {
         method = RequestMethod.PUT,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public ResponseEntity<Void> deleteMenuFromRole(@PathVariable String role_name,@PathVariable String menuId) throws URISyntaxException {
-        log.debug("REST request to add Menus to role : {} to {}", menuId,role_name);
-        menuService.deleteMenuFromRole(role_name,menuId);
+    public ResponseEntity<Void> deleteMenuFromRole(@PathVariable String role_name, @PathVariable String menuId) throws URISyntaxException {
+        log.debug("REST request to add Menus to role : {} to {}", menuId, role_name);
+        menuService.deleteMenuFromRole(role_name, menuId);
         return ResponseEntity.ok().headers(HeaderUtil.createEntityDeletionAlert("menu", menuId.toString())).build();
     }
 
@@ -122,14 +122,6 @@ public class MenuResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public List<Menu> getAllMenus() {
-//        rebuild
-//        var nodes = [
-//        {id:1, pId:0, name: "父节点1"},
-//        {id:11, pId:1, name: "子节点1"},
-//        {id:12, pId:1, name: "子节点2"}
-//        ];
-
-
         log.debug("REST request to get all Menus");
         List<Menu> menus = menuRepository.findAll();
         return menus;
@@ -137,7 +129,7 @@ public class MenuResource {
 
 
     /**
-     * GET  /menus : get all the menus.
+     * GET  /menus : get all the menus for tree format.
      *
      * @return the ResponseEntity with status 200 (OK) and the list of menus in body
      */
@@ -154,17 +146,17 @@ public class MenuResource {
 //        ];
         log.debug("REST request to get List Menus tree");
         List<Menu> menus = menuRepository.findAll();
-        return menus.stream().map(menu->{
-            Map<String,String> menuTmp = new HashMap<>();
-            menuTmp.put("id",menu.getId());
-            menuTmp.put("name",menu.getName());
-            if(menu.isChild()){
-                menuTmp.put("pId",menu.getParent().getId());
-            }else{
-                menuTmp.put("pId","0");
-            }
+        List<Map<String, String>> result = menus.stream().map(menu -> {
+            Map<String, String> menuTmp = new HashMap<>();
+            menuTmp.put("id", menu.getId());
+            menuTmp.put("name", menu.getName());
+            menuTmp.put("order", menu.getOrder_no().toString());
+            String garbage = menu.isChild() ? menuTmp.put("pId", menu.getParent().getId()) : menuTmp.put("pId", "0");
             return menuTmp;
         }).collect(Collectors.toList());
+        result.sort((Map<String, String> menu1, Map<String, String> menu2) ->
+            Integer.parseInt(menu1.get("order"))-Integer.parseInt(menu2.get("order")));
+        return result;
 
     }
 
