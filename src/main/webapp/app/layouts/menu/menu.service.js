@@ -9,20 +9,22 @@
     function Menu ($resource,$http,$log) {
         var resourceUrl =  'api/menus/:id';
 
-        //return $resource(resourceUrl, {}, {
-        //    'query': { method: 'GET', isArray: true},
-        //    'get': {
-        //        method: 'GET',
-        //        transformResponse: function (data) {
-        //            data = angular.fromJson(data);
-        //            return data;
-        //        }
-        //    },
-        //    'update': { method:'PUT' }
-        //});
+        var menuResource = $resource(resourceUrl, {}, {
+            'query': { method: 'GET', isArray: true},
+            'get': {
+                method: 'GET',
+                transformResponse: function (data) {
+                    data = angular.fromJson(data);
+                    return data;
+                }
+            },
+            'update': { method:'PUT' }
+        });
 
         var service = {
-            getMenusByRoles: getMenusByRoles
+            getMenusByRoles: getMenusByRoles,
+            menuResource:  menuResource,
+            getMenusTree: getMenusTree
         };
 
         function getMenusByRoles(roles){
@@ -31,6 +33,13 @@
                 method: "post",
                 url: "api/menusByRole",
                 data: JSON.stringify(roles)
+            });
+        }
+
+        function getMenusTree(){
+            return $http({
+                method: "get",
+                url: "api/menusTree"
             });
         }
 

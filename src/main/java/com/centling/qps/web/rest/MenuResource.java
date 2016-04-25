@@ -7,7 +7,6 @@ import com.centling.qps.repository.MenuRepository;
 import com.centling.qps.web.rest.util.HeaderUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
-import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
 import org.springframework.http.ResponseEntity;
@@ -16,10 +15,8 @@ import org.springframework.web.bind.annotation.*;
 import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Optional;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Menu.
@@ -125,9 +122,50 @@ public class MenuResource {
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     public List<Menu> getAllMenus() {
+//        rebuild
+//        var nodes = [
+//        {id:1, pId:0, name: "父节点1"},
+//        {id:11, pId:1, name: "子节点1"},
+//        {id:12, pId:1, name: "子节点2"}
+//        ];
+
+
         log.debug("REST request to get all Menus");
         List<Menu> menus = menuRepository.findAll();
         return menus;
+    }
+
+
+    /**
+     * GET  /menus : get all the menus.
+     *
+     * @return the ResponseEntity with status 200 (OK) and the list of menus in body
+     */
+    @RequestMapping(value = "/menusTree",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Map<String, String>> getMenusTree() {
+//        rebuild
+//        var nodes = [
+//        {id:1, pId:0, name: "父节点1"},
+//        {id:11, pId:1, name: "子节点1"},
+//        {id:12, pId:1, name: "子节点2"}
+//        ];
+        log.debug("REST request to get List Menus tree");
+        List<Menu> menus = menuRepository.findAll();
+        return menus.stream().map(menu->{
+            Map<String,String> menuTmp = new HashMap<>();
+            menuTmp.put("id",menu.getId());
+            menuTmp.put("name",menu.getName());
+            if(menu.isChild()){
+                menuTmp.put("pId",menu.getParent().getId());
+            }else{
+                menuTmp.put("pId","0");
+            }
+            return menuTmp;
+        }).collect(Collectors.toList());
+
     }
 
     /**

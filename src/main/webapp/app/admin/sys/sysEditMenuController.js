@@ -3,18 +3,19 @@
  * */
 
 angular.module('quayPsApp').
-    controller('sysEditMenuController', ['$scope', '$http', '$log', '$state', '$rootScope', 'mainService', 'sysService', function ($scope, $http, $log, $state, $rootScope, mainService, sysService) {
+    controller('sysEditMenuController', ['$scope', '$http', '$log', '$state', '$rootScope','Menu', function ($scope, $http, $log, $state, $rootScope, Menu) {
         $scope.roleItems = [];
         $scope.roleSelected = null;
 
         //get all system roles
-        $http.get(mainService.baseUrl + "management/role/getRoleAll").
-            success(function (response) {
-                $scope.roleItems = response;
-            }).
-            error(function (response) {
-                $log.error('error')
-            });
+        //$http.get(mainService.baseUrl + "management/role/getRoleAll").
+        //    success(function (response) {
+        //        $scope.roleItems = response;
+        //    }).
+        //    error(function (response) {
+        //        $log.error('error')
+        //    });
+
 
 
         //selected role changed
@@ -42,14 +43,11 @@ angular.module('quayPsApp').
         };
 
         //取得菜单树的数据, 并且将树初始化
-        $http.get(mainService.baseUrl + "management/menu/getMenuAll").
-            success(function (response) {
-                $scope.nodeData = mainService.sort(response, "orderNo", false);
-                //初始化菜单树
-                leftMenuTree = $.fn.zTree.init($('#leftMenuTree'), setting, $scope.nodeData);
-            }).
-            error(function (response) {
-            });
+        Menu.getMenusTree().then(function (menus) {
+            $scope.nodeData = menus.data;
+            //初始化菜单树
+            leftMenuTree = $.fn.zTree.init($('#leftMenuTree'), setting, $scope.nodeData);
+        })
 
         //将选择的菜单添加到角色里面
         $scope.addMenuToRoleButton = function () {
