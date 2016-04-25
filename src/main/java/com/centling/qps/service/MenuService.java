@@ -76,6 +76,7 @@ public class MenuService {
         Set<Menu> menusInOrder = role_names.stream()
             .map(role_name->{Authority authority = authorityRepository.findOne(role_name);return authority.getMenus();})
             .reduce(new TreeSet<>(),(all,items)->{all.addAll(items);return all;});
+
         return new TreeSet<>(menusInOrder);
     }
 

@@ -254,6 +254,7 @@ ul#strengthBar {
     cursor: pointer;
 }
 
+
 .datetime-picker-dropdown > li.date-picker-menu div > table .btn-default,
 .uib-datepicker-popup  > li > div.uib-datepicker > table .btn-default {
     border: 0;

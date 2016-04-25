@@ -15,6 +15,10 @@
                     templateUrl: 'app/layouts/navbar/navbar.html',
                     controller: 'NavbarController',
                     controllerAs: 'vm'
+                },
+                'menu@': {
+                    templateUrl: 'app/layouts/menu/menu.html',
+                    controller: 'MenuController',
                 }
             },
             resolve: {
@@ -25,7 +29,8 @@
                 ],
                 translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
                     $translatePartialLoader.addPart('global');
-                }]
+                }],
+
             }
         });
     }
