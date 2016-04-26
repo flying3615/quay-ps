@@ -134,10 +134,10 @@ public class MenuResource {
      * @return the ResponseEntity with status 200 (OK) and the list of menus in body
      */
     @RequestMapping(value = "/menusTree",
-        method = RequestMethod.GET,
+        method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
-    public List<Map<String, String>> getMenusTree() {
+    public List<Map<String, String>> getMenusTree(@RequestBody List<String> roles) {
 //        rebuild
 //        var nodes = [
 //        {id:1, pId:0, name: "父节点1"},
@@ -145,17 +145,14 @@ public class MenuResource {
 //        {id:12, pId:1, name: "子节点2"}
 //        ];
         log.debug("REST request to get List Menus tree");
-        List<Menu> menus = menuRepository.findAll();
-        List<Map<String, String>> result = menus.stream().map(menu -> {
-            Map<String, String> menuTmp = new HashMap<>();
-            menuTmp.put("id", menu.getId());
-            menuTmp.put("name", menu.getName());
-            menuTmp.put("order", menu.getOrder_no().toString());
-            String garbage = menu.isChild() ? menuTmp.put("pId", menu.getParent().getId()) : menuTmp.put("pId", "0");
-            return menuTmp;
-        }).collect(Collectors.toList());
-        result.sort((Map<String, String> menu1, Map<String, String> menu2) ->
-            Integer.parseInt(menu1.get("order"))-Integer.parseInt(menu2.get("order")));
+        List<Map<String, String>> result = null;
+        if(roles.size()==0){
+            List<Menu> menus = menuRepository.findAll();
+            result = menuService.formateMenus2Tree(menus);
+        }else{
+            TreeSet<Menu> menus = menuService.getMenusByRoleList(roles);
+            result = menuService.formateMenus2Tree(menus);
+        }
         return result;
 
     }

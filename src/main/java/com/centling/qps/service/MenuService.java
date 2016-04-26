@@ -10,9 +10,8 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import javax.inject.Inject;
-import java.util.List;
-import java.util.Set;
-import java.util.TreeSet;
+import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * Created by centling on 2016/4/19.
@@ -31,6 +30,7 @@ public class MenuService {
 
 
     public Authority addMenuToRole(String role_name, String menuId) {
+        //TODO change to optional
         Authority authority = authorityRepository.findOne(role_name);
         Menu menu = menuRepository.findOne(menuId);
         authority.getMenus().add(menu);
@@ -78,6 +78,20 @@ public class MenuService {
             .reduce(new TreeSet<>(),(all,items)->{all.addAll(items);return all;});
 
         return new TreeSet<>(menusInOrder);
+    }
+
+    public List<Map<String, String>> formateMenus2Tree(Collection<Menu> menus){
+        List<Map<String, String>> result = menus.stream().map(menu -> {
+            Map<String, String> menuTmp = new HashMap<>();
+            menuTmp.put("id", menu.getId());
+            menuTmp.put("name", menu.getName());
+            menuTmp.put("order", menu.getOrder_no().toString());
+            String garbage = menu.isChild() ? menuTmp.put("pId", menu.getParent().getId()) : menuTmp.put("pId", "0");
+            return menuTmp;
+        }).collect(Collectors.toList());
+        result.sort((Map<String, String> menu1, Map<String, String> menu2) ->
+            Integer.parseInt(menu1.get("order"))-Integer.parseInt(menu2.get("order")));
+        return result;
     }
 
 }

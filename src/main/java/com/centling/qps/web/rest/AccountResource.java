@@ -1,5 +1,6 @@
 package com.centling.qps.web.rest;
 
+import com.centling.qps.repository.AuthorityRepository;
 import com.codahale.metrics.annotation.Timed;
 import com.centling.qps.domain.Authority;
 import com.centling.qps.domain.User;
@@ -44,6 +45,19 @@ public class AccountResource {
 
     @Inject
     private MailService mailService;
+
+    @Inject
+    private AuthorityRepository authorityRepository;
+
+
+    @RequestMapping(value = "/authorities",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<Authority> getAuthorities() {
+        return authorityRepository.findAll();
+    }
+
 
     /**
      * POST  /register : register the user.

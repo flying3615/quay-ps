@@ -36,10 +36,11 @@
             });
         }
 
-        function getMenusTree(){
+        function getMenusTree(roles){
             return $http({
-                method: "get",
-                url: "api/menusTree"
+                method: "post",
+                url: "api/menusTree",
+                data: JSON.stringify(roles)
             });
         }
 

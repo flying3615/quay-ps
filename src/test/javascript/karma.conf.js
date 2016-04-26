@@ -30,6 +30,7 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/angular-translate-storage-cookie/angular-translate-storage-cookie.js',
             'src/main/webapp/bower_components/angular-ui-router/release/angular-ui-router.js',
             'src/main/webapp/bower_components/angular-ui-layout/src/ui-layout.js',
+            'src/main/webapp/bower_components/angular-ui-select/dist/select.js',
             'src/main/webapp/bower_components/bootstrap-ui-datetime-picker/dist/datetime-picker.js',
             'src/main/webapp/bower_components/json3/lib/json3.js',
             'src/main/webapp/bower_components/ng-file-upload/ng-file-upload.js',

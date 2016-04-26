@@ -94,7 +94,7 @@ public class Authority implements Serializable {
         return "Authority{" +
             "name='" + name + '\'' +
             ", role_name='" + role_name + '\'' +
-            ", menus=" + menus.stream().map(menu->menu.getName()).collect(Collectors.toList()) +
+//            ", menus=" + menus.stream().map(menu->menu.getName()).collect(Collectors.toList()) +
             '}';
     }
 }
