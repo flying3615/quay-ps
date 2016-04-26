@@ -80,7 +80,7 @@ public class MenuService {
         return new TreeSet<>(menusInOrder);
     }
 
-    public List<Map<String, String>> formateMenus2Tree(Collection<Menu> menus){
+    public List<Map<String, String>> formatMenus2Tree(Collection<Menu> menus){
         List<Map<String, String>> result = menus.stream().map(menu -> {
             Map<String, String> menuTmp = new HashMap<>();
             menuTmp.put("id", menu.getId());

@@ -16,7 +16,6 @@ import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
-import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Menu.
@@ -148,10 +147,10 @@ public class MenuResource {
         List<Map<String, String>> result = null;
         if(roles.size()==0){
             List<Menu> menus = menuRepository.findAll();
-            result = menuService.formateMenus2Tree(menus);
+            result = menuService.formatMenus2Tree(menus);
         }else{
             TreeSet<Menu> menus = menuService.getMenusByRoleList(roles);
-            result = menuService.formateMenus2Tree(menus);
+            result = menuService.formatMenus2Tree(menus);
         }
         return result;
 
