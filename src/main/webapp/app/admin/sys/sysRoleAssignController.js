@@ -51,7 +51,7 @@ controller('sysRoleAssignController', ['$scope', '$http', '$log', '$rootScope', 
                     }
                 });
                 gridApi.pagination.on.paginationChanged($scope, function (newPage, pageSize) {
-                    paginationOptions.pageNumber = newPage-1;
+                    paginationOptions.pageNumber = newPage - 1;
                     paginationOptions.pageSize = pageSize;
                     getUsers()
                 });
@@ -146,7 +146,7 @@ controller('sysRoleAssignController', ['$scope', '$http', '$log', '$rootScope', 
                     resolve: {
                         items: function () {
                             var role_names = [];
-                            angular.forEach($scope.allRoles,function(role_obj){
+                            angular.forEach($scope.allRoles, function (role_obj) {
                                 role_names.push(role_obj.role_name);
                             })
                             return role_names;
@@ -161,20 +161,18 @@ controller('sysRoleAssignController', ['$scope', '$http', '$log', '$rootScope', 
         var changeRole = function (row, roleObjs) {
             //var roleIds = mainService.getObjIds(roleObjs);
             var role_names = [];
-            angular.forEach(roleObjs,function(role){
+            angular.forEach(roleObjs, function (role) {
                 role_names.push(role.name);
             })
-            $http.post("api/users/change_roles", {"user_id": row.id, "role_names": role_names})
-                .success(function (response) {
-                    alert('角色变更成功！' + new Date());
-                })
-                .error(function (response) {
-                    console.log("sysRoleAssignController.js --> failed");
-                });
+            $http({method: "POST", url: "api/users/change_roles/"+row.id, data: JSON.stringify(role_names)}).then(
+                function (response) {
+                    alert('角色变更成功！');
+                }
+            )
         }
 
 
-        $scope.getTableHeight = function(){
+        $scope.getTableHeight = function () {
             var rowHeight = 30; // your row height
             var headerHeight = 30; // your header height
             return {

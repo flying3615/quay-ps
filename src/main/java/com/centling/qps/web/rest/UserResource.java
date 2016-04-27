@@ -231,12 +231,12 @@ public class UserResource {
      * @param role_names role names to add to user
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/users/change_roles",
+    @RequestMapping(value = "/users/change_roles/{user_id}",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> modifyUserRoles(@RequestBody String user_id, @RequestBody List<String> role_names) {
+    public ResponseEntity<Void> modifyUserRoles(@PathVariable String user_id, @RequestBody List<String> role_names) {
         log.debug("REST request to update User's Authorities : {} = {}", user_id, role_names);
         userService.modifyUserRoles(Long.parseLong(user_id),role_names);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.updated", user_id)).build();
