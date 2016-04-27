@@ -110,29 +110,61 @@ controller('sysRoleAssignController', ['$scope', '$http', '$log', '$rootScope', 
             $scope.userAllRoles = [];
             $scope.selectedRole.objs = [];
 
-            User.get({login: row.id}, function (user) {
-                console.log('获取用户已有角色数据已经返回');
-                console.log(response);
-                $scope.userAllRoles = user.data;
-
+            User.get({login: row.login}, function (user) {
+                $scope.userAllRoles = user.authorities;
                 angular.forEach($scope.allRoles, function (sysRole) {
                     angular.forEach($scope.userAllRoles, function (userRole) {
-                        if (userRole.id == sysRole.id) {
+                        if (userRole == sysRole.name) {
                             $scope.selectedRole.objs.push(sysRole);
                         }
                     })
                 });
 
-                console.log('用户已经拥有的角色已经初始化完毕');
-                console.log($scope.userAllRoles);
-                //openRoleAssignModal(row);
+
+                var modalInstance = $uibModal.open({
+                    animation: true,
+                    templateUrl: 'app/admin/sys/view/roleAssignModal.html',
+                    controller: function ($scope) {
+                        //modal中数据的初始化
+                        //$scope.selectedRole = {};  //选择好了，那么对象就往这里放
+                        //$scope.allRoles = $scope.userAllRoles;
+
+                        $scope.xClick = function () {
+                            modalInstance.dismiss('close');
+                        }
+
+                        $scope.okClick = function () {
+                            changeRole(row, $scope.selectedRole.objs);
+                            modalInstance.dismiss('close');
+                        }
+
+                        $scope.closeClick = function () {
+                            modalInstance.dismiss('close');
+                        }
+                    },
+                    size: 'md',
+                    resolve: {
+                        items: function () {
+                            var role_names = [];
+                            angular.forEach($scope.allRoles,function(role_obj){
+                                role_names.push(role_obj.role_name);
+                            })
+                            return role_names;
+                        }
+                    },
+                    scope: $scope   //表示在这里使用父类的scope，在modal的controller里面可以直接调用父类的scope。
+                })
             })
 
         }
 
         var changeRole = function (row, roleObjs) {
             //var roleIds = mainService.getObjIds(roleObjs);
-            $http.post("api/users/change_roles", {"user_id": row.id, "role_names": roleIds})
+            var role_names = [];
+            angular.forEach(roleObjs,function(role){
+                role_names.push(role.name);
+            })
+            $http.post("api/users/change_roles", {"user_id": row.id, "role_names": role_names})
                 .success(function (response) {
                     alert('角色变更成功！' + new Date());
                 })
@@ -141,42 +173,6 @@ controller('sysRoleAssignController', ['$scope', '$http', '$log', '$rootScope', 
                 });
         }
 
-        $scope.test = function () {
-            alert('hello');
-        }
-
-        var openRoleAssignModal = function (row) {
-            //用户添加角色的modal
-            var modalInstance = $uibModal.open({
-                animation: true,
-                templateUrl: 'app/admin/sys/view/roleAssignModal.html',
-                controller: function ($scope) {
-                    //modal中数据的初始化
-                    //$scope.selectedRole = {};  //选择好了，那么对象就往这里放
-                    $scope.allRoles = $scope.allRoles;
-
-                    $scope.xClick = function () {
-                        modalInstance.dismiss('close');
-                    }
-
-                    $scope.okClick = function () {
-                        changeRole(row, $scope.selectedRole.objs);
-                        modalInstance.dismiss('close');
-                    }
-
-                    $scope.closeClick = function () {
-                        modalInstance.dismiss('close');
-                    }
-                },
-                size: 'md',
-                resolve: {
-                    items: function () {
-                        return $scope.items;
-                    }
-                },
-                scope: $scope   //表示在这里使用父类的scope，在modal的controller里面可以直接调用父类的scope。
-            })
-        }
 
         $scope.getTableHeight = function(){
             var rowHeight = 30; // your row height

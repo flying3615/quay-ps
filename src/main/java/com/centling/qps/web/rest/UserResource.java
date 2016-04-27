@@ -243,8 +243,6 @@ public class UserResource {
     }
 
 
-
-
 //    /**
 //     * get pageable ManagedUserDTO converted from users
 //     *
