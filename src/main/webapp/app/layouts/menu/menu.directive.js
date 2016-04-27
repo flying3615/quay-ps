@@ -8,7 +8,6 @@ directive('defMenu', function () {
         link: function (scope, el, attrs) {
 
             scope.$watchCollection('menuList',function(newVal){
-                console.log(newVal);
                 if(newVal){
                     for (var i = 0; i < newVal.length; i++) {
                         newVal[i].unfold = false;

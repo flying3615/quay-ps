@@ -20,6 +20,17 @@
             // jhipster-needle-angularjs-add-module JHipster will add new module here
             'angular-loading-bar',
             'ui.layout',
+            //'ngTouch',
+            'ui.grid',
+            'ui.grid.pagination',
+            'ui.grid.selection',  //ui-grid function of selection
+            'ui.grid.exporter',
+            'ui.grid.saveState',
+            'ui.grid.cellNav',
+            'ui.grid.resizeColumns',
+            'ui.grid.moveColumns',
+            'ui.grid.pinning',
+            'ui.grid.grouping',
         ])
         .run(run);
 

@@ -14,8 +14,11 @@ import com.centling.qps.web.rest.util.HeaderUtil;
 import com.centling.qps.web.rest.util.PaginationUtil;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.convert.converter.Converter;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.MediaType;
@@ -166,7 +169,7 @@ public class UserResource {
 
     /**
      * GET  /users : get all users.
-     * 
+     *
      * @param pageable the pagination information
      * @return the ResponseEntity with status 200 (OK) and with body all users
      * @throws URISyntaxException if the pagination headers couldnt be generated
@@ -219,4 +222,47 @@ public class UserResource {
         userService.deleteUserInformation(login);
         return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.deleted", login)).build();
     }
+
+
+    /**
+     * MODIFY USER's ROLES
+     *
+     * @param user_id target user to update
+     * @param role_names role names to add to user
+     * @return the ResponseEntity with status 200 (OK)
+     */
+    @RequestMapping(value = "/users/change_roles",
+        method = RequestMethod.POST,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    @Secured(AuthoritiesConstants.ADMIN)
+    public ResponseEntity<Void> modifyUserRoles(@RequestBody String user_id, @RequestBody List<String> role_names) {
+        log.debug("REST request to update User's Authorities : {} = {}", user_id, role_names);
+        userService.modifyUserRoles(Long.parseLong(user_id),role_names);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.updated", user_id)).build();
+    }
+
+
+
+
+//    /**
+//     * get pageable ManagedUserDTO converted from users
+//     *
+//     * @param page current page number
+//     * @param size each page contains rows
+//     * @return Page ManagedUserDTO
+//     */
+//    @RequestMapping(value = "/users/page",
+//        method = RequestMethod.GET,
+//        produces = MediaType.APPLICATION_JSON_VALUE)
+//    @Timed
+//    @Secured(AuthoritiesConstants.ADMIN)
+//    public Page<ManagedUserDTO> getUserPagebale(@RequestParam(value = "page", defaultValue = "0") Integer page,
+//    @RequestParam(value = "size", defaultValue = "15") Integer size) {
+//        log.debug("REST request to get pageable Users page= {} size = {}", page, size);
+//        Sort sort = new Sort(Sort.Direction.DESC, "createdDate");
+//        Pageable pageable = new PageRequest(page,size,sort);
+//        return userRepository.findAll(pageable).map(ManagedUserDTO::new);
+//    }
+
 }

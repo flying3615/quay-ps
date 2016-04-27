@@ -9,7 +9,8 @@
 
     function stateConfig($stateProvider) {
 
-        $stateProvider.state('editMenu', {
+        $stateProvider.
+        state('editMenu', {
             parent: 'admin',
             url: '/editMenu',
             data: {
@@ -21,12 +22,6 @@
                     templateUrl: 'app/admin/sys/view/sysEditMenu.html',
                     controller: 'sysEditMenuController'
                 }
-            },
-            resolve: {
-                translatePartialLoader: ['$translate', '$translatePartialLoader', function ($translate, $translatePartialLoader) {
-                    $translatePartialLoader.addPart('audits');
-                    return $translate.refresh();
-                }]
             }
         }).
         state('roleAssign', {
@@ -49,7 +44,5 @@
                 }]
             }
         });
-
-
     }
 })();

@@ -5,9 +5,9 @@
         .module('quayPsApp')
         .factory('Principal', Principal);
 
-    Principal.$inject = ['$q', 'Account', 'JhiTrackerService'];
+    Principal.$inject = ['$q', '$resource', 'Account', 'JhiTrackerService'];
 
-    function Principal ($q, Account, JhiTrackerService) {
+    function Principal ($q, $resource, Account, JhiTrackerService) {
         var _identity,
             _authenticated = false;
 
@@ -17,10 +17,16 @@
             hasAuthority: hasAuthority,
             identity: identity,
             isAuthenticated: isAuthenticated,
-            isIdentityResolved: isIdentityResolved
+            isIdentityResolved: isIdentityResolved,
+            listAllRoles: listAllRoles
         };
 
         return service;
+
+        function listAllRoles(){
+            console.log("principal in list all roles ");
+            return $resource('api/authorities');
+        }
 
         function authenticate (identity) {
             _identity = identity;

@@ -1,6 +1,7 @@
 package com.centling.qps.service;
 
 import com.centling.qps.QuayPsApp;
+import com.centling.qps.domain.Authority;
 import com.centling.qps.domain.User;
 import com.centling.qps.repository.UserRepository;
 import java.time.ZonedDateTime;
@@ -15,8 +16,10 @@ import org.springframework.test.context.junit4.SpringJUnit4ClassRunner;
 import org.springframework.test.context.web.WebAppConfiguration;
 
 import javax.inject.Inject;
+import java.util.ArrayList;
 import java.util.Optional;
 import java.util.List;
+import java.util.stream.Collectors;
 
 import static org.assertj.core.api.Assertions.*;
 
@@ -118,4 +121,28 @@ public class UserServiceIntTest {
         List<User> users = userRepository.findAllByActivatedIsFalseAndCreatedDateBefore(now.minusDays(3));
         assertThat(users).isEmpty();
     }
+
+
+    @Test
+    public void testChangeUserRoles() {
+        User u = userService.getUserWithAuthoritiesByLogin("admin").get();
+        assertThat(u).isNotNull();
+        Authority authority_admin = new Authority();
+        authority_admin.setName("ROLE_ADMIN");
+        assertThat(u.getAuthorities().equals(authority_admin));
+
+        List<String> role_names = new ArrayList();
+
+        role_names.add("ROLE_USER");
+        role_names.add("ROLE_FINANCE");
+
+        userService.modifyUserRoles(u.getId(),role_names);
+
+        u = userService.getUserWithAuthoritiesByLogin("admin").get();
+        List<String> new_roles = u.getAuthorities().stream().map(auth->auth.getName()).collect(Collectors.toList());
+        assertThat(new_roles).contains("ROLE_USER");
+        assertThat(new_roles).contains("ROLE_FINANCE");
+
+    }
+
 }

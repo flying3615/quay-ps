@@ -1,0 +1,35 @@
+<div class="modal-content">
+    <div class="modal-header">
+        <button type="button" class="close"
+                data-dismiss="modal" aria-hidden="true" ng-click="xClick()">
+            &times;
+        </button>
+        <h4 class="modal-title" id="myModalLabel">
+           <span class="glyphicon glyphicon-info-sign"></span>管理角色
+        </h4>
+    </div>
+    <div class="modal-body">
+        <div class="container-fluid">
+            <div class="row">
+                <div class="col-xs-12">
+                    <div style="text-align: center">
+                        <ui-select multiple ng-model="$parent.selectedRole.objs" theme="bootstrap" ng-disabled="disabled" style="width: 100%;">
+                            <ui-select-match placeholder="点击选择角色(多选)">{{$item.roleName}}</ui-select-match>
+                            <ui-select-choices repeat="role in $parent.allRoles">
+                                <div ng-bind-html="role.roleName"></div>
+                                <small>
+                                    <!--系统名称: {{role.authority}}-->
+                                    系统名称: <span style="color: red;" ng-bind-html="''+role.authority"></span>
+                                </small>
+                            </ui-select-choices>
+                        </ui-select>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+    <div class="modal-footer">
+        <button type="button" class="btn btn-danger" data-dismiss="modal" ng-click="okClick()">开始变更</button>
+        <button type="button" class="btn btn-primary" ng-click="closeClick()">关闭</button>
+    </div>
+</div>

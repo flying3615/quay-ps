@@ -58,6 +58,16 @@ public class AccountResource {
         return authorityRepository.findAll();
     }
 
+    @RequestMapping(value = "/authorities/{user_id}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public ResponseEntity<UserDTO> getAuthorities(@PathVariable String user_id) {
+        return Optional.ofNullable(userRepository.findOne(Long.parseLong(user_id)))
+            .map(user -> new ResponseEntity<>(new UserDTO(user), HttpStatus.OK))
+            .orElse(new ResponseEntity<>(HttpStatus.INTERNAL_SERVER_ERROR));
+    }
+
 
     /**
      * POST  /register : register the user.

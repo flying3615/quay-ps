@@ -3,6 +3,9 @@ package com.centling.qps.repository;
 import com.centling.qps.domain.User;
 
 import java.time.ZonedDateTime;
+
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.data.jpa.repository.JpaRepository;
 import org.springframework.data.jpa.repository.Query;
 
@@ -25,6 +28,8 @@ public interface UserRepository extends JpaRepository<User, Long> {
     Optional<User> findOneByLogin(String login);
 
     Optional<User> findOneById(Long userId);
+
+//    Page<User> findAll(Pageable pageable);
 
     @Override
     void delete(User t);

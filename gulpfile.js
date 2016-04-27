@@ -35,7 +35,7 @@ gulp.task('clean', function () {
 });
 
 gulp.task('copy', function () {
-    return es.merge( 
+    return es.merge(
         gulp.src(config.app + 'i18n/**')
         .pipe(plumber({errorHandler: handleErrors}))
         .pipe(changed(config.dist + 'i18n/'))
@@ -99,12 +99,14 @@ gulp.task('styles', [], function () {
         .pipe(browserSync.reload({stream: true}));
 });
 
+//for our defined js injection
 gulp.task('inject', function () {
     return gulp.src(config.app + 'index.html')
         .pipe(inject(gulp.src(config.app + 'app/**/*.js').pipe(angularFilesort()), {relative: true}))
         .pipe(gulp.dest(config.app));
 });
 
+//for bower injection
 gulp.task('wiredep', ['wiredep:test', 'wiredep:app']);
 
 gulp.task('wiredep:app', function () {

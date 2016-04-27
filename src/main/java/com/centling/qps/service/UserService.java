@@ -144,6 +144,18 @@ public class UserService {
         });
     }
 
+    public void modifyUserRoles(Long userId, List<String> roleNames) {
+        Optional.of(userRepository.findOne(userId))
+        .ifPresent(u -> {
+            u.getAuthorities().clear();
+            authorityRepository.findByNameIn(roleNames).forEach(u.getAuthorities()::add);
+            userRepository.save(u);
+            log.debug("Changed Auth for User: {}  Auth: {}", u,roleNames);
+        });
+    }
+
+
+
     public void deleteUserInformation(String login) {
         userRepository.findOneByLogin(login).ifPresent(u -> {
             userRepository.delete(u);
