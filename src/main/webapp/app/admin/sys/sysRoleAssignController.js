@@ -1,6 +1,10 @@
 angular.module('quayPsApp').
-controller('sysRoleAssignController', ['$scope', '$http', '$log', '$rootScope', '$uibModal', 'Principal', 'User', 'paginationConstants',
-    function ($scope, $http, $log, $rootScope, $uibModal, Principal, User, paginationConstants) {
+controller('sysRoleAssignController', ['$scope', '$http', '$log', '$rootScope', '$uibModal', 'Principal', 'User', 'paginationConstants','AlertService',
+    function ($scope, $http, $log, $rootScope, $uibModal, Principal, User, paginationConstants,AlertService) {
+
+
+
+
         $scope.selectedRole = {};
         $scope.allRoles = [];
         $scope.userAllRoles = [];  //某个用户已经拥有的所有角色
@@ -36,7 +40,7 @@ controller('sysRoleAssignController', ['$scope', '$http', '$log', '$rootScope', 
                 },
                 {
                     name: 'init password',
-                    cellTemplate: '<button class="btn btn-default form-control" ng-click="grid.appScope.openRoleAssignModal(row.entity)">管理角色</button>',
+                    cellTemplate: '<button class="btn btn-primary form-control" ng-click="grid.appScope.openRoleAssignModal(row.entity)">管理角色</button>',
                     displayName: '操作',
                     enableSorting: false
                 },
@@ -134,7 +138,14 @@ controller('sysRoleAssignController', ['$scope', '$http', '$log', '$rootScope', 
                         }
 
                         $scope.okClick = function () {
-                            changeRole(row, $scope.selectedRole.objs);
+                            var roleObjs = $scope.selectedRole.objs;
+                            var role_names = [];
+                            angular.forEach(roleObjs, function (role) {
+                                role_names.push(role.name);
+                            })
+
+                            var data = {"user_ids":[row.id],"role_names":role_names};
+                            $http({method: "POST", url: "api/users/change_roles", data: JSON.stringify(data)})
                             modalInstance.dismiss('close');
                         }
 
@@ -157,20 +168,6 @@ controller('sysRoleAssignController', ['$scope', '$http', '$log', '$rootScope', 
             })
 
         }
-
-        var changeRole = function (row, roleObjs) {
-            //var roleIds = mainService.getObjIds(roleObjs);
-            var role_names = [];
-            angular.forEach(roleObjs, function (role) {
-                role_names.push(role.name);
-            })
-            $http({method: "POST", url: "api/users/change_roles/"+row.id, data: JSON.stringify(role_names)}).then(
-                function (response) {
-                    alert('角色变更成功！');
-                }
-            )
-        }
-
 
         $scope.getTableHeight = function () {
             var rowHeight = 30; // your row height

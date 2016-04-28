@@ -227,19 +227,22 @@ public class UserResource {
     /**
      * MODIFY USER's ROLES
      *
-     * @param user_id target user to update
-     * @param role_names role names to add to user
+     * @param input target user to update
      * @return the ResponseEntity with status 200 (OK)
      */
-    @RequestMapping(value = "/users/change_roles/{user_id}",
+//    @RequestMapping(value = "/users/change_roles/{user_id}",
+    @RequestMapping(value = "/users/change_roles",
         method = RequestMethod.POST,
         produces = MediaType.APPLICATION_JSON_VALUE)
     @Timed
     @Secured(AuthoritiesConstants.ADMIN)
-    public ResponseEntity<Void> modifyUserRoles(@PathVariable String user_id, @RequestBody List<String> role_names) {
-        log.debug("REST request to update User's Authorities : {} = {}", user_id, role_names);
-        userService.modifyUserRoles(Long.parseLong(user_id),role_names);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.updated", user_id)).build();
+//    public ResponseEntity<Void> modifyUserRoles(@PathVariable String user_id, @RequestBody List<String> role_names) {
+    public ResponseEntity<Void> modifyUserRoles( @RequestBody Map<String,List<String>> input) {
+        log.debug("REST request to update User's Authorities : {}", input);
+        Long user_id = Long.parseLong(input.get("user_ids").get(0));
+        List<String> role_names = input.get("role_names");
+        userService.modifyUserRoles(user_id,role_names);
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.updated", user_id.toString())).build();
     }
 
 
