@@ -13,6 +13,7 @@
             urlTemplate: 'i18n/{lang}/{part}.json'
         });
 
+
         $translateProvider.preferredLanguage('en');
         $translateProvider.useStorage('translationStorageProvider');
         $translateProvider.useSanitizeValueStrategy('escaped');

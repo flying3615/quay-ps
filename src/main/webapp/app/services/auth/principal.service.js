@@ -24,7 +24,6 @@
         return service;
 
         function listAllRoles(){
-            console.log("principal in list all roles ");
             return $resource('api/authorities');
         }
 

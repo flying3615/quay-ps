@@ -113,7 +113,5 @@ controller('sysEditMenuController', ['$scope', '$http', '$log', '$state', '$root
             })
         }
 
-
-
     }
 }]);

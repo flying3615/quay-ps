@@ -242,7 +242,7 @@ public class UserResource {
         Long user_id = Long.parseLong(input.get("user_ids").get(0));
         List<String> role_names = input.get("role_names");
         userService.modifyUserRoles(user_id,role_names);
-        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.updated", user_id.toString())).build();
+        return ResponseEntity.ok().headers(HeaderUtil.createAlert( "userManagement.updated", role_names.toString())).build();
     }
 
 
