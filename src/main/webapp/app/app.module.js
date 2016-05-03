@@ -34,10 +34,11 @@
         ])
         .run(run);
 
-    run.$inject = ['stateHandler', 'translationHandler'];
+    run.$inject = ['stateHandler', 'translationHandler',"$rootScope","Principal"];
 
-    function run(stateHandler, translationHandler) {
+    function run(stateHandler, translationHandler,$rootScope,Principal) {
         stateHandler.initialize();
         translationHandler.initialize();
+        $rootScope.isAuthenticated = Principal.isAuthenticated;
     }
 })();

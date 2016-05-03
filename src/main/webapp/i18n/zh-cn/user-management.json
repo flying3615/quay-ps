@@ -5,9 +5,9 @@
             "createLabel": "创建新用户",
             "createOrEditLabel": "创建或编辑用户"
         },
-        "created": "ID 为 {{ param }} 的用户被创建",
-        "updated": "ID 为 {{ param }} 的用户被更新",
-        "deleted": "ID 为 {{ param }} 的用户被删除",
+        "created": "用户 {{ param }} 被创建",
+        "updated": "用户 {{ param }} 被更新",
+        "deleted": "用户 {{ param }} 被删除",
         "delete": {
             "question": "你确定要删除用户 {{ login }}?"
         },

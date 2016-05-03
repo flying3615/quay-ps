@@ -9,13 +9,21 @@
 
     function MenuController($scope, $state, Menu, Principal, $log) {
 
-        Principal.identity().then(function (account) {
-            Menu.getMenusByRoles(account.authorities).then(function (menus) {
-                $scope.menuList = changeToTree(menus.data);
-            })
-        });
+        //wrap in a login/logout event
 
-        //change data to tree data
+        $scope.authenticated = null;
+
+        var getMenus = function(){
+            Principal.identity().then(function (account) {
+                if(account){
+                    Menu.getMenusByRoles(account.authorities).then(function (menus) {
+                        $scope.menuList = changeToTree(menus.data);
+                        $scope.authenticated = Principal.isAuthenticated;
+                    })
+                }
+            });
+        }
+
         var changeToTree = function (data) {
             var parentNodes = []
             //pick up the parent
@@ -37,6 +45,17 @@
             });
             return parentNodes;
         }
+
+        $scope.$on('authenticationSuccess', function() {
+            getMenus();
+        });
+
+        getMenus();
+
+        $scope.$on('logoutSuccess', function() {
+            $scope.menuList = [];
+            // menus sidebar needs to be collapsed
+        })
 
     }
 })();

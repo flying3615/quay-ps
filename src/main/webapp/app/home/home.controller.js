@@ -5,17 +5,9 @@
         .module('quayPsApp')
         .controller('HomeController', HomeController);
 
-    HomeController.$inject = ['$scope','$log', 'Principal', 'LoginService','AlertService'];
+    HomeController.$inject = ['$scope','$log', 'Principal', 'LoginService'];
 
-    function HomeController ($scope,$log, Principal, LoginService,AlertService) {
-
-        AlertService.success("This is a success message, it is green");
-
-        AlertService.info("This is an info message, it is blue");
-
-        AlertService.warning("This is a warning message, it is amber");
-
-        AlertService.error("This is an error message, it is red");
+    function HomeController ($scope,$log, Principal, LoginService) {
 
         var vm = this;
 

@@ -134,6 +134,7 @@
                 $rootScope.previousStateName = undefined;
                 $rootScope.previousStateNameParams = undefined;
             }
+            $rootScope.$broadcast('logoutSuccess');
         }
 
         function resetPasswordFinish (keyAndPassword, callback) {
