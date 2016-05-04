@@ -49,9 +49,6 @@
                 }
 
 
-                //TODO, dynamically check server menu resources
-
-
                 if($rootScope.toState.data.is_dynamic_menu){
                     Menu.getRolesByMenu($rootScope.toState.data.menu_url).then(function(roles){
                         if(!Principal.hasAnyAuthority(roles.data)){

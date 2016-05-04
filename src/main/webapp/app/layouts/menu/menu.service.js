@@ -49,7 +49,8 @@
         function getRolesByMenu(menu_url){
             return $http({
                 method: "get",
-                url: "api/rolesByMenu/"+menu_url
+                url: "api/rolesByMenu/"+menu_url,
+                cache:true
             });
         }
 
