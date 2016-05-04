@@ -24,7 +24,8 @@
         var service = {
             getMenusByRoles: getMenusByRoles,
             menuResource:  menuResource,
-            getMenusTree: getMenusTree
+            getMenusTree: getMenusTree,
+            getRolesByMenu:getRolesByMenu
         };
 
         function getMenusByRoles(roles){
@@ -41,6 +42,14 @@
                 method: "post",
                 url: "api/menusTree",
                 data: JSON.stringify(roles)
+            });
+        }
+
+
+        function getRolesByMenu(menu_url){
+            return $http({
+                method: "get",
+                url: "api/rolesByMenu/"+menu_url
             });
         }
 

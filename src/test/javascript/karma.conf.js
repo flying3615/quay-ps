@@ -39,6 +39,9 @@ module.exports = function (config) {
             'src/main/webapp/bower_components/sockjs-client/dist/sockjs.js',
             'src/main/webapp/bower_components/stomp-websocket/lib/stomp.min.js',
             'src/main/webapp/bower_components/ztree/js/jquery.ztree.core-3.5.js',
+            'src/main/webapp/bower_components/angular-animate/angular-animate.js',
+            'src/main/webapp/bower_components/angular-messages/angular-messages.js',
+            'src/main/webapp/bower_components/angular-material/angular-material.js',
             'src/main/webapp/bower_components/angular-mocks/angular-mocks.js',
             // endbower
             'src/main/webapp/app/app.module.js',

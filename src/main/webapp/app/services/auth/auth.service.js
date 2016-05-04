@@ -5,9 +5,9 @@
         .module('quayPsApp')
         .factory('Auth', Auth);
 
-    Auth.$inject = ['$rootScope', '$state', '$q', '$translate', 'Principal', 'AuthServerProvider', 'Account', 'LoginService', 'Register', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish', 'JhiTrackerService'];
+    Auth.$inject = ['$rootScope', '$state', '$q', '$translate', 'Principal', 'AuthServerProvider', 'Account', 'LoginService', 'Register', 'Activate', 'Password', 'PasswordResetInit', 'PasswordResetFinish', 'JhiTrackerService','Menu'];
 
-    function Auth ($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, LoginService, Register, Activate, Password, PasswordResetInit, PasswordResetFinish, JhiTrackerService) {
+    function Auth ($rootScope, $state, $q, $translate, Principal, AuthServerProvider, Account, LoginService, Register, Activate, Password, PasswordResetInit, PasswordResetFinish, JhiTrackerService, Menu) {
         var service = {
             activateAccount: activateAccount,
             authorize: authorize,
@@ -48,23 +48,36 @@
                     $state.go('home');
                 }
 
-                if ($rootScope.toState.data.authorities && $rootScope.toState.data.authorities.length > 0 && !Principal.hasAnyAuthority($rootScope.toState.data.authorities)) {
-                    if (isAuthenticated) {
-                        // user is signed in but not authorized for desired state
-                        $state.go('accessdenied');
-                    }
-                    else {
-                        // user is not authenticated. stow the state they wanted before you
-                        // send them to the login service, so you can return them when you're done
-                        $rootScope.redirected = true;
-                        $rootScope.previousStateName = $rootScope.toState;
-                        $rootScope.previousStateNameParams = $rootScope.toStateParams;
 
-                        // now, send them to the signin state so they can log in
-                        $state.go('accessdenied');
-                        LoginService.open();
+                //TODO, dynamically check server menu resources
+
+
+                if($rootScope.toState.data.is_dynamic_menu){
+                    Menu.getRolesByMenu($rootScope.toState.data.menu_url).then(function(roles){
+                        if(!Principal.hasAnyAuthority(roles.data)){
+                            $state.go('accessdenied');
+                        }
+                    });
+                }else{
+                    if ($rootScope.toState.data.authorities && $rootScope.toState.data.authorities.length > 0 && !Principal.hasAnyAuthority($rootScope.toState.data.authorities)) {
+                        if (isAuthenticated) {
+                            // user is signed in but not authorized for desired state
+                            $state.go('accessdenied');
+                        }
+                        else {
+                            // user is not authenticated. stow the state they wanted before you
+                            // send them to the login service, so you can return them when you're done
+                            $rootScope.redirected = true;
+                            $rootScope.previousStateName = $rootScope.toState;
+                            $rootScope.previousStateNameParams = $rootScope.toStateParams;
+
+                            // now, send them to the signin state so they can log in
+                            $state.go('accessdenied');
+                            LoginService.open();
+                        }
                     }
                 }
+
             }
         }
 

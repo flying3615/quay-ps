@@ -17,4 +17,5 @@ public interface MenuRepository extends JpaRepository<Menu,String> {
 
     Optional<Menu> findByName(String menuName);
 
+    Optional<Menu> findByUrl(String menu_url);
 }

@@ -16,6 +16,7 @@ import javax.inject.Inject;
 import java.net.URI;
 import java.net.URISyntaxException;
 import java.util.*;
+import java.util.stream.Collectors;
 
 /**
  * REST controller for managing Menu.
@@ -88,6 +89,22 @@ public class MenuResource {
         TreeSet<Menu> result = menuService.getMenusByRoleList(roles);
         return result;
     }
+
+
+
+    @RequestMapping(value = "/rolesByMenu/{menu_url}",
+        method = RequestMethod.GET,
+        produces = MediaType.APPLICATION_JSON_VALUE)
+    @Timed
+    public List<String> getrolesByMenu(@PathVariable String menu_url) throws URISyntaxException {
+        log.debug("REST request to get ROLES by MENU by menu: {}", menu_url);
+        Menu menu = menuRepository.findByUrl(menu_url).get();
+        List<String> roles =  menu.getAuthoritys().stream().map(authority -> authority.getName()).collect(Collectors.toList());
+        log.debug("REST request to get ROLES by MENU return : {}", roles);
+        return roles;
+    }
+
+
 
     @RequestMapping(value = "/addMenuToRole/{role_name}/{menuId}",
         method = RequestMethod.PUT,

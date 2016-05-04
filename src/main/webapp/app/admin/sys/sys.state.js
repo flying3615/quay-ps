@@ -1,6 +1,5 @@
 (function () {
     'use strict';
-
     angular
         .module('quayPsApp')
         .config(stateConfig);
@@ -14,8 +13,8 @@
             parent: 'admin',
             url: '/editMenu',
             data: {
-                authorities: ['ROLE_ADMIN'],
-                pageTitle: 'audits.title'
+                is_dynamic_menu:  true,
+                menu_url:  "editMenu"
             },
             views: {
                 'content@': {
@@ -28,8 +27,8 @@
             parent: 'admin',
             url: '/roleAssign',
             data: {
-                authorities: ['ROLE_ADMIN'],
-                pageTitle: 'audits.title'
+                is_dynamic_menu:  true,
+                menu_url:  "editMenu"
             },
             views: {
                 'content@': {

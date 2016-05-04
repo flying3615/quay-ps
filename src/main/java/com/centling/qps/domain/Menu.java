@@ -46,7 +46,7 @@ public class Menu implements Serializable, Comparable<Menu>{
     @Column(name = "order_no")
     private Integer order_no;
 
-    @ManyToMany(mappedBy = "menus")
+    @ManyToMany(mappedBy = "menus",fetch = FetchType.EAGER)
     @JsonIgnore
     @Cache(usage = CacheConcurrencyStrategy.NONSTRICT_READ_WRITE)
     private Set<Authority> authoritys = new HashSet<>();
