@@ -117,5 +117,62 @@
         "emailexists": "该邮箱已被使用!",
         "idexists": "新建的 {{entityName}} 的ID已经存在"
     },
+    "menu": {
+        "system": {
+            "title": "系统管理",
+            "menu_allocate": "Menus",
+            "role_allocate": "Create a new Menu"
+        },
+        "business_query": {
+            "title": "业务查询",
+            "cargo": "Menus",
+            "history": "Create a new Menu",
+            "auth": "Create or edit a Menu"
+        },
+        "user": {
+            "title": "会员管理",
+            "query": "Menus",
+            "modify": "Create a new Menu",
+            "sign": "Create or edit a Menu"
+        },
+        "notify": {
+            "title": "通知管理",
+            "push": "Menus",
+            "history": "Create a new Menu",
+            "oder_notice": "Create or edit a Menu"
+        },
+        "app": {
+            "title": "APP管理",
+            "upload": "Menus",
+            "upgrade": "Create a new Menu",
+            "qr_code": "Create or edit a Menu",
+            "location": "Search for Menu"
+        },
+        "finance": {
+            "title": "财务管理",
+            "flow_query": "Menus",
+            "reversing": "Create a new Menu",
+            "add": "Create or edit a Menu"
+        },
+        "template": {
+            "title": "推送模板管理",
+            "query": "Menus",
+            "create": "Create a new Menu",
+            "modify": "Create or edit a Menu",
+            "delete": "Search for Menu"
+        },
+        "log": {
+            "title": "日志管理",
+            "finance": "财务日志",
+            "operation": "操作日志"
+        },
+        "report": {
+            "title": "报表管理",
+            "deal": "交易报表",
+            "interests": "分润报表",
+            "clearing": "清算报表"
+        }
+    },
     "footer": "这里是页脚"
+
 }
