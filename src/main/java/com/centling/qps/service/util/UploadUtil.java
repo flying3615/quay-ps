@@ -1,7 +1,9 @@
 package com.centling.qps.service.util;
 
+import com.centling.qps.async.ExceptionHandlingAsyncTaskExecutor;
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
+import org.springframework.core.task.AsyncTaskExecutor;
 import org.springframework.messaging.simp.SimpMessagingTemplate;
 import org.springframework.stereotype.Component;
 
@@ -25,10 +27,12 @@ public class UploadUtil {
 
     private final Logger log = LoggerFactory.getLogger(UploadUtil.class);
 
-    ExecutorService executor = Executors.newSingleThreadExecutor();
 
     @Inject
     SimpMessagingTemplate brokerMessagingTemplate;
+
+    @Inject
+    ExceptionHandlingAsyncTaskExecutor executor;
 
 
     final String APP_CLIENT_TOPIC = "/topic/app_upload";
@@ -76,10 +80,10 @@ public class UploadUtil {
         });
     }
 
-    @PreDestroy
-    void shutdown() {
-        executor.shutdownNow();
-    }
+//    @PreDestroy
+//    void shutdown() {
+//        executor.shutdownNow();
+//    }
 
 
     private void sendMessage(String topic, String message) {

@@ -18,7 +18,7 @@
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/admin/sys/view/sysEditMenu.html',
+                    templateUrl: 'app/admin/sysMenu/view/sysEditMenu.html',
                     controller: 'sysEditMenuController'
                 }
             }
@@ -32,7 +32,7 @@
             },
             views: {
                 'content@': {
-                    templateUrl: 'app/admin/sys/view/sysRoleAssign.html',
+                    templateUrl: 'app/admin/sysMenu/view/query.html',
                     controller: 'sysRoleAssignController'
                 }
             },

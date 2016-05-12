@@ -2,9 +2,6 @@ angular.module('quayPsApp').
 controller('sysRoleAssignController', ['$scope', '$http', '$log', '$rootScope', '$uibModal', 'Principal', 'User', 'paginationConstants','AlertService',
     function ($scope, $http, $log, $rootScope, $uibModal, Principal, User, paginationConstants,AlertService) {
 
-
-
-
         $scope.selectedRole = {};
         $scope.allRoles = [];
         $scope.userAllRoles = [];  //某个用户已经拥有的所有角色
@@ -103,7 +100,7 @@ controller('sysRoleAssignController', ['$scope', '$http', '$log', '$rootScope', 
             //        $scope.gridOptions.data = response.data;
             //    })
             //    .error(function (response) {
-            //        console.log("sysRoleAssignController.js --> failed");
+            //        console.log("query.controller.js --> failed");
             //    });
 
         }
