@@ -21,8 +21,9 @@
                     controller: 'MenuController',
                 },
                 'login@': {
-                    templateUrl: 'app/login/login.html',
-                    controller: 'MenuController',
+                    templateUrl: 'app/components/login/login_adminEX.html',
+                    controller: 'LoginEXController',
+                    controllerAs: 'vm'
                 }
             },
             resolve: {

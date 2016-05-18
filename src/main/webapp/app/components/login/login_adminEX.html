@@ -1,13 +1,13 @@
 <div class="container">
 
-    <form class="form-signin" action="index.html">
+    <form class="form-signin" role="form" ng-submit="vm.login($event)">
         <div class="form-signin-heading text-center">
             <h1 class="sign-title">Sign In</h1>
             <img src="../../content/images/login-logo.png" alt=""/>
         </div>
         <div class="login-wrap">
-            <input type="text" class="form-control" placeholder="User ID" autofocus>
-            <input type="password" class="form-control" placeholder="Password">
+            <input type="text" class="form-control" placeholder="User ID" autofocus ng-model="vm.username">
+            <input type="password" class="form-control" placeholder="Password" ng-model="vm.password">
 
             <button class="btn btn-lg btn-login btn-block" type="submit">
                 <i class="fa fa-check"></i>
@@ -20,7 +20,7 @@
                 </a>
             </div>
             <label class="checkbox">
-                <input type="checkbox" value="remember-me"> Remember me
+                <input type="checkbox" value="remember-me" ng-model="vm.rememberMe" checked> Remember me
                 <span class="pull-right">
                     <a data-toggle="modal" href="#myModal"> Forgot Password?</a>
 
