@@ -100,9 +100,11 @@ gulp.task('styles', [], function () {
 });
 
 //for our defined js injection
+var jsPath = ['!'+config.app + 'app/adminEX/**/*.js', config.app + 'app/**/*.js'];
+//var jsPath = [config.app + 'app/**/*.js'];
 gulp.task('inject', function () {
     return gulp.src(config.app + 'index.html')
-        .pipe(inject(gulp.src(config.app + 'app/**/*.js').pipe(angularFilesort()), {relative: true}))
+        .pipe(inject(gulp.src(jsPath).pipe(angularFilesort()), {relative: true}))
         .pipe(gulp.dest(config.app));
 });
 

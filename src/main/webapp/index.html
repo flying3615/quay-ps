@@ -21,6 +21,8 @@
     <!-- endbuild -->
     <!-- build:css content/css/main.css -->
     <link rel="stylesheet" href="content/css/main.css">
+    <link rel="stylesheet" href="content/css/style-responsive.css">
+    <link rel="stylesheet" href="content/css/style.css">
 
     <style>
         .wrap {
@@ -48,11 +50,12 @@
 <!--</div>-->
 <!--</div>-->
 
-<div ui-view="navbar"></div>
+
 <div class="wrap" ng-controller="appController">
     <ui-layout options="{ flow: 'row',dividerSize: '0' }">
         <div ng-switch="isLoggedin">
             <div ng-switch-when="true">
+                <div ui-view="navbar"></div>
                 <div ui-layout-container size="90%">
                     <ui-layout options="{ flow: 'column', dividerSize: '0' }">
                         <div ui-layout-container class="def-right-border">
@@ -68,16 +71,7 @@
                 </div>
             </div>
             <div ng-switch-when="false">
-                <div ui-layout-container size="90%">
-                    <ui-layout options="{ flow: 'column', dividerSize: '0' }">
-                        <div ui-layout-container size="85%">
-                            <div class=".col-md-8" ui-view="content"></div>
-                        </div>
-                    </ui-layout>
-                </div>
-                <div ui-layout-container size="5%" ng-cloak>
-                    <p translate="footer">This is your footer</p>
-                </div>
+                <div ui-view="login"></div>
             </div>
 
         </div>
@@ -153,10 +147,10 @@
 <script src="app/layouts/navbar/navbar.controller.js"></script>
 <script src="app/layouts/navbar/active-menu.directive.js"></script>
 <script src="app/layouts/navbar/active-link.directive.js"></script>
-<script src="app/layouts/error/error.state.js"></script>
 <script src="app/layouts/menu/menu.service.js"></script>
 <script src="app/layouts/menu/menu.directive.js"></script>
 <script src="app/layouts/menu/menu.controller.js"></script>
+<script src="app/layouts/error/error.state.js"></script>
 <script src="app/components/util/truncate-words.filter.js"></script>
 <script src="app/components/util/truncate-characters.filter.js"></script>
 <script src="app/components/util/sort.directive.js"></script>
@@ -168,12 +162,12 @@
 <script src="app/components/util/data-util.service.js"></script>
 <script src="app/components/util/capitalize.filter.js"></script>
 <script src="app/components/util/base64.service.js"></script>
+<script src="app/components/login/login.service.js"></script>
+<script src="app/components/login/login.controller.js"></script>
 <script src="app/components/language/language.service.js"></script>
 <script src="app/components/language/language.filter.js"></script>
 <script src="app/components/language/language.controller.js"></script>
 <script src="app/components/language/language.constants.js"></script>
-<script src="app/components/login/login.service.js"></script>
-<script src="app/components/login/login.controller.js"></script>
 <script src="app/components/interceptor/bootswatch.interceptor.js"></script>
 <script src="app/components/form/uib-pagination.config.js"></script>
 <script src="app/components/form/uib-pager.config.js"></script>
@@ -199,15 +193,6 @@
 <script src="app/blocks/config/http.config.js"></script>
 <script src="app/blocks/config/compile.config.js"></script>
 <script src="app/blocks/config/alert.config.js"></script>
-<script src="app/account/settings/settings.state.js"></script>
-<script src="app/account/settings/settings.controller.js"></script>
-<script src="app/account/register/register.state.js"></script>
-<script src="app/account/register/register.controller.js"></script>
-<script src="app/account/password/password.state.js"></script>
-<script src="app/account/password/password.controller.js"></script>
-<script src="app/account/password/password-strength-bar.directive.js"></script>
-<script src="app/account/activate/activate.state.js"></script>
-<script src="app/account/activate/activate.controller.js"></script>
 <script src="app/admin/user-management/user-management.state.js"></script>
 <script src="app/admin/user-management/user-management.controller.js"></script>
 <script src="app/admin/user-management/user-management-dialog.controller.js"></script>
@@ -219,12 +204,12 @@
 <script src="app/admin/sysMenu/sysRoleAssignController.js"></script>
 <script src="app/admin/sysMenu/sysEditMenuController.js"></script>
 <script src="app/admin/sysMenu/sys.state.js"></script>
-<script src="app/admin/QueryMenu/query.state.js"></script>
-<script src="app/admin/QueryMenu/query.controller.js"></script>
 <script src="app/admin/metrics/metrics.state.js"></script>
 <script src="app/admin/metrics/metrics.service.js"></script>
 <script src="app/admin/metrics/metrics.modal.controller.js"></script>
 <script src="app/admin/metrics/metrics.controller.js"></script>
+<script src="app/admin/QueryMenu/query.state.js"></script>
+<script src="app/admin/QueryMenu/query.controller.js"></script>
 <script src="app/admin/logs/logs.state.js"></script>
 <script src="app/admin/logs/logs.service.js"></script>
 <script src="app/admin/logs/logs.controller.js"></script>
@@ -239,11 +224,20 @@
 <script src="app/admin/audits/audits.state.js"></script>
 <script src="app/admin/audits/audits.service.js"></script>
 <script src="app/admin/audits/audits.controller.js"></script>
+<script src="app/account/settings/settings.state.js"></script>
+<script src="app/account/settings/settings.controller.js"></script>
+<script src="app/account/password/password.state.js"></script>
+<script src="app/account/password/password.controller.js"></script>
+<script src="app/account/password/password-strength-bar.directive.js"></script>
+<script src="app/account/register/register.state.js"></script>
+<script src="app/account/register/register.controller.js"></script>
+<script src="app/account/activate/activate.state.js"></script>
+<script src="app/account/activate/activate.controller.js"></script>
 <script src="app/home/home.state.js"></script>
 <script src="app/home/home.controller.js"></script>
 <script src="app/entities/entity.state.js"></script>
-<script src="app/account/account.state.js"></script>
 <script src="app/admin/admin.state.js"></script>
+<script src="app/account/account.state.js"></script>
 <script src="app/app.state.js"></script>
 <script src="app/app.controller.js"></script>
 <script src="app/app.constants.js"></script>

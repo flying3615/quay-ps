@@ -19,6 +19,10 @@
                 'menu@': {
                     templateUrl: 'app/layouts/menu/menu.directive.html',
                     controller: 'MenuController',
+                },
+                'login@': {
+                    templateUrl: 'app/login/login.html',
+                    controller: 'MenuController',
                 }
             },
             resolve: {
